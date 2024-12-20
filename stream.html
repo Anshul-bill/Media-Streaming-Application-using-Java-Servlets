@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video and Audio Streaming</title>
+
+    <style>
+        /* Global styles */
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Background Gradient */
+        body {
+            background: #0D343A;
+            background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(13, 52, 58, 1)), to(#000000));
+            background: -moz-linear-gradient(top, rgba(13, 52, 58, 1) 0%, rgba(0, 0, 0, 1) 100%);
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        h1 {
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        video, audio {
+            width: 100%;
+            max-width: 960px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            video, audio {
+                width: 90%;
+            }
+        }
+
+        /* Footer Style */
+        footer {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 0.8em;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Video and Audio Streaming Section -->
+    <div class="video-container">
+        <h1>Video and Audio Streaming</h1>
+
+        <!-- Video Element -->
+        <video id="videoElement" controls autoplay muted>
+            <source src="http://localhost:8080/video_server/VideoStreamServlet?type=video" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Audio Element -->
+        <audio id="audioElement" autoplay>
+            <source src="http://localhost:8080/video_server/VideoStreamServlet?type=audio" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+    </div>
+
+    <footer>
+        <p>Video and Audio Streaming © 2024</p>
+    </footer>
+
+    <script>
+        const videoElement = document.getElementById('videoElement');
+        const audioElement = document.getElementById('audioElement');
+
+        // Ensure audio starts with video
+        videoElement.onplay = () => {
+            audioElement.play();
+        };
+
+        videoElement.onpause = () => {
+            audioElement.pause();
+        };
+
+        videoElement.onseeked = () => {
+            audioElement.currentTime = videoElement.currentTime;
+        };
+    </script>
+
+</body>
+
+</html>
